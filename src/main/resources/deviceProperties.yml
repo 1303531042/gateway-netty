@@ -1,0 +1,50 @@
+devices:
+  devicesForProductIdMap:
+    1: #类中的属性名
+      - productId: 10
+        serialNumber: ab
+        userId: 1
+        firmwareVersion: 1.0
+        rssi: -55
+      - productId: 10
+        serialNumber: ab
+        userId: 2
+        firmwareVersion: 1.0
+        rssi: -55
+      - productId: 10
+        serialNumber: ab
+        userId: 3
+        firmwareVersion: 1.0
+        rssi: -55
+      - productId: 10
+        serialNumber: ab
+        userId: 4
+        firmwareVersion: 1.0
+        rssi: -55
+    2:
+      - productId: 10
+        serialNumber: ab
+        userId: 5
+        firmwareVersion: 1.0
+        rssi: -55
+      - productId: 10
+        serialNumber: ab
+        userId: 6
+        firmwareVersion: 1.0
+        rssi: -55
+      - productId: 10
+        serialNumber: ab
+        userId: 7
+        firmwareVersion: 1.0
+        rssi: -55
+      - productId: 10
+        serialNumber: ab
+        userId: 8
+        firmwareVersion: 1.0
+        rssi: -55
+
+
+
+
+
+

@@ -3,6 +3,7 @@ package com.kun.simulation;
 import com.kun.simulation.domain.Device;
 import com.kun.simulation.mqtt.bean.EmqxClient;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @date 2023/2/8
  **/
 @Data
+@Component
 public class DeviceManger {
     /**
      * key: 产品id

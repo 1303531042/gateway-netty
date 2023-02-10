@@ -1,6 +1,8 @@
 package com.kun.simulation;
 
+import com.kun.simulation.properties.factory.PropertiesFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.rmi.MarshalledObject;
@@ -14,8 +16,10 @@ import java.util.Map;
 public class DeviceFactory implements InitializingBean {
 
     private Map<Long, ProductProperties> productPropertiesMap;
-
+    @Autowired
     private DeviceManger deviceManger;
+    @Autowired
+    private PropertiesFactory propertiesFactory;
 
 
 

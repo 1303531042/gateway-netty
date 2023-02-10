@@ -96,21 +96,14 @@ public abstract class Device {
      */
     private boolean online;
 
-    public Device() {
-        try {
-            afterPropertiesSet();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public Device(Long productId,String serialNumber, Long userId,  BigDecimal firmwareVersion, Integer rssi) {
+        this.productId = productId;
+        this.userId = userId;
+        this.serialNumber = serialNumber;
+        this.firmwareVersion = firmwareVersion;
+        this.status =3 ;
+        this.rssi = rssi;
     }
-    public Device(String productId) {
-        try {
-            afterPropertiesSet();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
     public void afterPropertiesSet() throws Exception {
         initSummary();
@@ -119,9 +112,6 @@ public abstract class Device {
         initFunctions();
         initFunctionActionMap();
     }
-
-    public abstract void initSummary();
-    public abstract void initRemarkMap();
 
     public void initProperties() throws IllegalAccessException {
         Class clazz = this.getClass();
@@ -231,13 +221,25 @@ public abstract class Device {
 
     }
 
-    public abstract void checkOffline();
-    public abstract void checkOnline();
 
-    public void setOnline(boolean online) {
-        this.online = online;
+
+    protected void checkStatus() {
+        if (isOnline()) {
+            if (checkOffline()){
+                setStatus(4);//然后发布 info
+            }
+        } else {
+            if (checkOnline()){
+                setStatus(4);//然后发布 info 但是影子模式是通过 emqx钩子实现的 虽然设备有上下线 但是emxq一直在线 导致 设备影子值无法触发
+            }
+        }
     }
-    public boolean isOnline() {
-        return online;
-    }
+
+    public abstract void initSummary();
+    public abstract void initRemarkMap();
+    public abstract boolean checkOffline();
+    public abstract boolean checkOnline();
+
+
+
 }
