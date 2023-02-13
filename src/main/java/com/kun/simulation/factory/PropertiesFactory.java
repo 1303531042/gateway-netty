@@ -1,7 +1,7 @@
-package com.kun.simulation.properties.factory;
+package com.kun.simulation.factory;
 
 import com.kun.simulation.annotation.device.ProductID;
-import com.kun.simulation.config.DeviceYmlConfig;
+import com.kun.simulation.properties.config.DeviceYmlConfig;
 import com.kun.simulation.properties.BaseDeviceProperties;
 import com.kun.simulation.util.ClassUtils;
 import com.kun.simulation.util.StringUtils;
@@ -19,6 +19,7 @@ import java.util.*;
 /**
  * @author KUN
  * @date 2023/2/9
+ * @describe  设备信息工厂
  **/
 @Data
 @Slf4j
@@ -27,10 +28,23 @@ public class PropertiesFactory implements InitializingBean {
     @Autowired
     private Map<String, Object> deviceYmlMap;
 
+    /**
+     * yml内容
+     * key: 产品id
+     * value：map key: valueName
+     *           value: 值
+     */
     private Map<String, Object> devicesForProductIdMap;
+    /**
+     * key: 产品id
+     * value：产品propertiesClass对象
+     */
+    private Map<String, Class<?>> productIDtoDevicePropertiesClassMap;
 
-    private Map<String, Class<?>> productIDtoDevicePropertiesMap;
-
+    /**
+     * key: 产品id
+     * value: DeviceProperties对象数组
+     */
     private Map<String, List<BaseDeviceProperties>> productIDtoBaseDevicePropertiesListMap = new HashMap<>();
 
     @Override
@@ -40,18 +54,23 @@ public class PropertiesFactory implements InitializingBean {
 
     }
 
+    /**
+     * 初始化initProductIDtoDevicePropertiesMap
+     */
     private void initProductIDtoDevicePropertiesMap() {
         List<Class<?>> classList = ClassUtils.getClasses("com.kun.simulation.properties");
-        productIDtoDevicePropertiesMap = new HashMap<>();
+        productIDtoDevicePropertiesClassMap = new HashMap<>();
         for (Class<?> clazz : classList) {
             ProductID productID = clazz.getAnnotation(ProductID.class);
             if (productID != null) {
                 String id = String.valueOf(productID.Value());
-                productIDtoDevicePropertiesMap.put(id, clazz);
+                productIDtoDevicePropertiesClassMap.put(id, clazz);
             }
         }
     }
-
+    /**
+     * 初始化initProductIDtoBaseDevicePropertiesListMap
+     */
     private void initProductIDtoBaseDevicePropertiesListMap() {
         devicesForProductIdMap = DeviceYmlConfig.devicesForProductIdMap;
         Iterator<Map.Entry<String, Object>> iterator = devicesForProductIdMap.entrySet().iterator();
@@ -64,8 +83,14 @@ public class PropertiesFactory implements InitializingBean {
 
     }
 
+    /**
+     * 初始化所有yml中的设备信息
+     * 初始化productIDtoBaseDevicePropertiesListMap
+     * @param productID
+     * @param deviceFieldList
+     */
     private void createDeviceProperties(String productID, List<Map<String, Object>> deviceFieldList) {
-        Class<?> clazz = productIDtoDevicePropertiesMap.get(productID);
+        Class<?> clazz = productIDtoDevicePropertiesClassMap.get(productID);
         if (clazz == null) {
             log.error("productID： " + productID + " deviceProperties未实现");
             return;

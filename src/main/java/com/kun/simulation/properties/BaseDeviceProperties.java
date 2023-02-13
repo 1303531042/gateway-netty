@@ -10,13 +10,14 @@ import java.math.BigDecimal;
  **/
 @Data
 public abstract class BaseDeviceProperties {
+    /** 加密模式 */
+    public String encryptionModel;
     /** 产品ID */
     public Integer productId;
     /** 设备编号 */
     public String serialNumber;
     /** 用户ID */
     public Integer userId;
-
 
     /** 固件版本 */
     public Double firmwareVersion;

@@ -1,4 +1,4 @@
-package com.kun.simulation.config;
+package com.kun.simulation.properties.config;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;

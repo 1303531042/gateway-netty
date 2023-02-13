@@ -30,7 +30,7 @@ public abstract class Device {
     private Map<String, Object> properties;
 
     /**
-     * 设备属性map
+     * 设备方法map
      */
     private Map<String, Object> functions;
 
