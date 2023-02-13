@@ -2,11 +2,15 @@ package com.kun.simulation.factory;
 
 import com.kun.simulation.DeviceManger;
 import com.kun.simulation.ProductProperties;
+import com.kun.simulation.annotation.device.ProductID;
 import com.kun.simulation.factory.PropertiesFactory;
+import com.kun.simulation.util.ClassUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,13 +27,14 @@ public class DeviceFactory implements InitializingBean {
     @Autowired
     private PropertiesFactory propertiesFactory;
 
-    private Map<Class<?>, Class<?>> propertiesClassToDeviceClass;
 
 
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        productPropertiesMap
 
     }
+
+
+
 }

@@ -1,6 +1,7 @@
 package com.kun.simulation.factory;
 
 import com.kun.simulation.annotation.device.ProductID;
+import com.kun.simulation.annotation.device.PropertiesToDeviceClass;
 import com.kun.simulation.properties.config.DeviceYmlConfig;
 import com.kun.simulation.properties.BaseDeviceProperties;
 import com.kun.simulation.util.ClassUtils;
@@ -10,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,12 +21,17 @@ import java.util.*;
  * @date 2023/2/9
  * @describe  设备信息工厂
  **/
-@Data
 @Slf4j
 @Component
 public class PropertiesFactory implements InitializingBean {
     @Autowired
     private Map<String, Object> deviceYmlMap;
+    /**
+     * key: propertiesClass
+     * value: deviceClass
+     */
+    private Map<Class<?>, Class<?>> propertiesClassToDeviceClass;
+
 
     /**
      * yml内容
@@ -50,12 +55,13 @@ public class PropertiesFactory implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         initProductIDtoDevicePropertiesMap();
+        initPropertiesClassToDeviceClass();
         initProductIDtoBaseDevicePropertiesListMap();
 
     }
 
     /**
-     * 初始化initProductIDtoDevicePropertiesMap
+     * 初始化initProductIDtoDevicePropertiesMap 获取产品id对应PropertiesClass对象
      */
     private void initProductIDtoDevicePropertiesMap() {
         List<Class<?>> classList = ClassUtils.getClasses("com.kun.simulation.properties");
@@ -69,7 +75,7 @@ public class PropertiesFactory implements InitializingBean {
         }
     }
     /**
-     * 初始化initProductIDtoBaseDevicePropertiesListMap
+     * 初始化initProductIDtoBaseDevicePropertiesListMap 读取yml内容
      */
     private void initProductIDtoBaseDevicePropertiesListMap() {
         devicesForProductIdMap = DeviceYmlConfig.devicesForProductIdMap;
@@ -143,5 +149,21 @@ public class PropertiesFactory implements InitializingBean {
             }
         }
 
+    }
+
+    public Map<String, List<BaseDeviceProperties>> getProductIDtoBaseDevicePropertiesListMap() {
+        return productIDtoBaseDevicePropertiesListMap;
+    }
+
+    private void initPropertiesClassToDeviceClass() {
+        List<Class<?>> classList = ClassUtils.getClasses("com.kun.simulation.properties");
+        propertiesClassToDeviceClass = new HashMap<>();
+        for (Class<?> clazz : classList) {
+            PropertiesToDeviceClass propertiesToDeviceClass = clazz.getAnnotation(PropertiesToDeviceClass.class);
+            if (propertiesToDeviceClass != null) {
+                Class<?> deviceClass = propertiesToDeviceClass.Value();
+                propertiesClassToDeviceClass.put(clazz, deviceClass);
+            }
+        }
     }
 }
