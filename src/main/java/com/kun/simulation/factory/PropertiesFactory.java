@@ -151,10 +151,10 @@ public class PropertiesFactory implements InitializingBean {
 
     }
 
-    public Map<String, List<BaseDeviceProperties>> getProductIDtoBaseDevicePropertiesListMap() {
-        return productIDtoBaseDevicePropertiesListMap;
-    }
 
+    /**
+     * 初始化PropertiesClassToDeviceClass 根据 PropertiesToDeviceClass 获取到deviceClass
+     */
     private void initPropertiesClassToDeviceClass() {
         List<Class<?>> classList = ClassUtils.getClasses("com.kun.simulation.properties");
         propertiesClassToDeviceClass = new HashMap<>();
@@ -166,4 +166,13 @@ public class PropertiesFactory implements InitializingBean {
             }
         }
     }
+    public Map<String, List<BaseDeviceProperties>> getProductIDtoBaseDevicePropertiesListMap() {
+        return productIDtoBaseDevicePropertiesListMap;
+    }
+
+    public  Class<?> getDeviceClass(Class<? extends BaseDeviceProperties> propertiesClass) {
+        return propertiesClassToDeviceClass.get(propertiesClass);
+    }
+
+
 }

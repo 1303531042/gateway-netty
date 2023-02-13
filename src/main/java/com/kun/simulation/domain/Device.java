@@ -103,14 +103,22 @@ public abstract class Device {
         this.firmwareVersion = firmwareVersion;
         this.status =3 ;
         this.rssi = rssi;
+        afterPropertiesSet();
     }
 
-    public void afterPropertiesSet() throws Exception {
-        initSummary();
-        initRemarkMap();
-        initProperties();
-        initFunctions();
-        initFunctionActionMap();
+    public void afterPropertiesSet() {
+        try {
+            initSummary();
+            initRemarkMap();
+            initProperties();
+            initFunctions();
+            initFunctionActionMap();
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void initProperties() throws IllegalAccessException {
