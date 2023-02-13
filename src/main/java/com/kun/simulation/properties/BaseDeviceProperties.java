@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 /**
  * @author KUN
  * @date 2023/2/9
+ * @describe 设备信息抽象类
  **/
 @Data
 public abstract class BaseDeviceProperties {

@@ -166,10 +166,16 @@ public class PropertiesFactory implements InitializingBean {
             }
         }
     }
+
     public Map<String, List<BaseDeviceProperties>> getProductIDtoBaseDevicePropertiesListMap() {
         return productIDtoBaseDevicePropertiesListMap;
     }
 
+    /**
+     * 通过propertiesClass获取deviceClass
+     * @param propertiesClass
+     * @return
+     */
     public  Class<?> getDeviceClass(Class<? extends BaseDeviceProperties> propertiesClass) {
         return propertiesClassToDeviceClass.get(propertiesClass);
     }

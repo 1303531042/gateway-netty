@@ -12,6 +12,7 @@ import java.util.Map;
 /**
  * @author KUN
  * @date 2023/2/9
+ * @describe 设备yml配置类
  **/
 @Configuration
 public class DeviceYmlConfig {

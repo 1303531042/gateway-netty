@@ -59,7 +59,7 @@ public abstract class Device {
     private String serialNumber;
 
     /** 固件版本 */
-    private BigDecimal firmwareVersion;
+    private Double firmwareVersion;
 
     /** 设备状态（1-未激活，2-禁用，3-在线，4-离线） */
     private Integer status;
@@ -74,10 +74,10 @@ public abstract class Device {
     private String networkIp;
 
     /** 设备经度 */
-    private BigDecimal longitude;
+    private Double longitude;
 
     /** 设备纬度 */
-    private BigDecimal latitude;
+    private Double latitude;
 
     /** 更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -96,7 +96,7 @@ public abstract class Device {
      */
     private boolean online;
 
-    public Device(Long productId,String serialNumber, Long userId,  BigDecimal firmwareVersion, Integer rssi) {
+    public Device(Long productId,String serialNumber, Long userId,  Double firmwareVersion, Integer rssi) {
         this.productId = productId;
         this.userId = userId;
         this.serialNumber = serialNumber;

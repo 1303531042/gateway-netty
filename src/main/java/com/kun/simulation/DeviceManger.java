@@ -12,6 +12,7 @@ import java.util.Map;
 /**
  * @author KUN
  * @date 2023/2/8
+ * @describe 设备管理类
  **/
 @Data
 @Component
@@ -45,14 +46,30 @@ public class DeviceManger {
         emqxClientMap.putIfAbsent(device, client);
     }
 
+    /**
+     * 通过产品id获取其所有设备
+     * @param productId
+     * @return
+     */
     public List<Device> getDevicesForProductIdToDeviceMap(Long productId) {
         return productIdToDeviceMap.get(productId);
 
     }
+
+    /**
+     * 通过设备编号获取设备
+     * @param serialNumber
+     * @return
+     */
     public Device getDeviceForSerialNumberToDeviceMap(String serialNumber) {
         return serialNumberToDeviceMap.get(serialNumber);
     }
 
+    /**
+     * 获取设备对应的 mqtt client
+     * @param device
+     * @return
+     */
     public EmqxClient getEmqxClientForEmqxClientMap(Device device) {
         return emqxClientMap.get(device);
     }

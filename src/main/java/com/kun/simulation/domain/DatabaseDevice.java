@@ -18,7 +18,7 @@ public abstract class DatabaseDevice extends Device {
      */
     private final int time;
 
-    public DatabaseDevice(int time, Long productId, String serialNumber, Long userId, BigDecimal firmwareVersion, Integer rssi) {
+    public DatabaseDevice(int time, Long productId, String serialNumber, Long userId, Double firmwareVersion, Integer rssi) {
         super(productId, serialNumber, userId, firmwareVersion, rssi);
         this.time = time;
     }
